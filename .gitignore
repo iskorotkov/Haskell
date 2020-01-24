@@ -1,0 +1,8 @@
+*.iml
+*.xml
+*.o
+*.exe
+*.hi
+/.idea/
+/.vs/
+/.vscode/
