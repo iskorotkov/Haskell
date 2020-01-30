@@ -1,6 +1,6 @@
 main = print $ 1
 
-winner participants = winner' [] [1 .. participants] 1
+winner participants = winner' [] participants 1
  where
   winner' [x]  []       _   = x
   winner' []   [x]      _   = x
