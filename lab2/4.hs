@@ -1,5 +1,5 @@
-maxHolidays holidays = forEveryMonth [1 .. 12]
+maxHolidays holidays = foo [1 .. 12] 0 0
   where
-    forEveryMonth [] = []
-    forEveryMonth (n : ns) =
-        length (filter (\(d, m) -> m == n) holidays) : forEveryMonth ns
+    foo []       mv mi = mi
+    foo (n : ns) mv mi = if count > mv then foo ns count n else foo ns mv mi
+        where count = length (filter (\(d, m) -> m == n) holidays)
