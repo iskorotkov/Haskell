@@ -1,3 +1,4 @@
+-- Part 1
 data Tree =
   Branch String Tree Tree
   | Leaf String
@@ -16,17 +17,12 @@ instance Show Tree where
   show (Leaf x      ) = x
   show (Branch x l r) = "<" ++ show l ++ ">" ++ x ++ "<" ++ show r ++ ">"
 
+-- Part 2
 postfix (Leaf x      ) = x
 postfix (Branch x l r) = postfix l ++ " " ++ postfix r ++ " " ++ x
 
-evalTree (Leaf x) = read x :: Integer
-evalTree (Branch x l r) | x == "+" = evalTree l + evalTree r
-                        | x == "-" = evalTree l - evalTree r
-                        | x == "*" = evalTree l * evalTree r
-                        | x == "/" = evalTree l `div` evalTree r
-
-evalPostfix [] = 0
-evalPostfix s  = evalExpr [] (words s)
+-- Part 3
+evalPostfix s = evalExpr [] (words s)
  where
   evalExpr [x         ] []          = x
   evalExpr (y : x : xs) ("+" : ops) = evalExpr ((x + y) : xs) ops
