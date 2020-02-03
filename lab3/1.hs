@@ -20,4 +20,4 @@ parse s = parseExpr [] (reverse (words s))
 
 instance (Show a) => Show (Tree a) where
   show (Leaf x      ) = show x
-  show (Branch x l r) = show l ++ show x ++ show r
+  show (Branch x l r) = "<" ++ show l ++ ">" ++ show x ++ "<" ++ show r ++ ">"
