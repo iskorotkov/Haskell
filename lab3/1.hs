@@ -21,3 +21,10 @@ instance (Show a) => Show (Tree a) where
 
 postfix (Leaf x      ) = show x
 postfix (Branch x l r) = postfix l ++ " " ++ postfix r ++ " " ++ show x
+
+evalTree :: Tree String -> Integer
+evalTree (Leaf x) = read x :: Integer
+evalTree (Branch x l r) | x == "+" = evalTree l + evalTree r
+                        | x == "-" = evalTree l - evalTree r
+                        | x == "*" = evalTree l * evalTree r
+                        | x == "/" = evalTree l `div` evalTree r
