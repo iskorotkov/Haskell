@@ -1,19 +1,23 @@
-data Tree a = Branch { value :: a, left :: (Tree a), right :: (Tree a)} | Leaf a
+data Tree a =
+  Branch {value :: a, left :: (Tree a), right :: (Tree a)}
+  | Leaf {value :: a}
+  deriving Show
 
+parseTerm :: [String] -> (Tree String)
+parseTerm [x        ] = Leaf x
+parseTerm (l : x : r) = Branch x (parseTerm r) (Leaf l)
+
+parse :: String -> (Tree String)
 parse s = parseExpr [] (reverse (words s))
  where
-  parseExpr :: [a] -> [a] -> Tree a
+  parseExpr :: [String] -> [String] -> (Tree String)
   parseExpr l []      = parseTerm l
   parseExpr l (x : r) = if x == "+" || x == "-"
-    then Branch x (parseExpr r) (parseTerm l)
+    then Branch x (parseExpr [] r) (parseTerm l)
     else parseExpr (l ++ [x]) r
-   where
-    parseTerm :: [a] -> Tree a
-    parseTerm [x        ] = Leaf x
-    parseTerm (l : x : r) = Branch x (parseTerm r) (Leaf l)
 
 --instance (Read a) => Read (Tree a) where
     --read s = []
 
-instance (Show a) => Show (Tree a) where
-  show t = ""
+--instance (Show a) => Show (Tree a) where
+  --show t = ""
