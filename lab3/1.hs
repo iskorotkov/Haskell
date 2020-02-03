@@ -28,3 +28,22 @@ evalTree (Branch x l r) | x == "+" = evalTree l + evalTree r
                         | x == "-" = evalTree l - evalTree r
                         | x == "*" = evalTree l * evalTree r
                         | x == "/" = evalTree l `div` evalTree r
+
+evalPostfix :: String -> Integer
+evalPostfix [] = 0
+evalPostfix s  = evalExpr [] (words s)
+ where
+  val :: String -> Integer
+  val x = read x :: Integer
+  evalOp x y op | op == "+" = x + y
+                | op == "-" = x - y
+                | op == "*" = x * y
+                | op == "/" = x `div` y
+  evalExpr :: [Integer] -> [String] -> Integer
+  evalExpr [x] [] = x
+  -- + - * /
+  evalExpr [p1] (x : y : op : t) =
+    evalExpr (p1 : [evalOp (val x) (val y) op]) t
+  --
+  evalExpr [p1, p2] (op     : t) = evalExpr [evalOp (val x) (val y) op] t
+  evalExpr [p1]     (x : op : t) = evalExpr [evalOp p1 (val x) op] t
