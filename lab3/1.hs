@@ -1,7 +1,6 @@
 data Tree a =
   Branch {value :: a, left :: (Tree a), right :: (Tree a)}
   | Leaf {value :: a}
-  deriving Show
 
 parseTerm :: [String] -> (Tree String)
 parseTerm [x        ] = Leaf x
@@ -19,5 +18,6 @@ parse s = parseExpr [] (reverse (words s))
 --instance (Read a) => Read (Tree a) where
     --read s = []
 
---instance (Show a) => Show (Tree a) where
-  --show t = ""
+instance (Show a) => Show (Tree a) where
+  show (Leaf x      ) = show x
+  show (Branch x l r) = show l ++ show x ++ show r
