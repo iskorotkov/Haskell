@@ -26,10 +26,10 @@ instance Show Tree where
 postfix (Leaf x      ) = x
 postfix (Branch x l r) = postfix l ++ " " ++ postfix r ++ " " ++ x
 
+-- Part 3
 -- Get two values from stack, apply given operation and put the result back in the stack
 shelve (y : x : st) op = op x y : st
 
--- Part 3
 -- Evaluate expression in postfix form
 eval s = evalExpr [] (words s)
  where
@@ -41,3 +41,12 @@ eval s = evalExpr [] (words s)
     "*" -> evalExpr (shelve stack (*)) ops
     "/" -> evalExpr (shelve stack quot) ops
     _   -> evalExpr ((read op :: Integer) : stack) ops
+
+-- from book
+solve = head . foldl foldingFunction [] . words
+ where
+  foldingFunction (x : y : ys) "*"    = (y * x) : ys
+  foldingFunction (x : y : ys) "/"    = (y `quot` x) : ys
+  foldingFunction (x : y : ys) "+"    = (y + x) : ys
+  foldingFunction (x : y : ys) "-"    = (y - x) : ys
+  foldingFunction xs           number = read number : xs
