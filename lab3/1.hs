@@ -39,5 +39,5 @@ eval s = evalExpr [] (words s)
     "+" -> evalExpr (shelve stack (+)) ops
     "-" -> evalExpr (shelve stack (-)) ops
     "*" -> evalExpr (shelve stack (*)) ops
-    "/" -> evalExpr (shelve stack div) ops
+    "/" -> evalExpr (shelve stack quot) ops
     _   -> evalExpr ((read op :: Integer) : stack) ops
