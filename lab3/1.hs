@@ -50,3 +50,5 @@ solve = head . foldl foldingFunction [] . words
   foldingFunction (x : y : ys) "+"    = (y + x) : ys
   foldingFunction (x : y : ys) "-"    = (y - x) : ys
   foldingFunction xs           number = read number : xs
+
+ev = solve . postfix . parse
